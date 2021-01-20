@@ -1,6 +1,10 @@
 using AloneCoreApp.Application.AutoMapper;
+using AloneCoreApp.Application.Implementation;
+using AloneCoreApp.Application.Interfaces;
 using AloneCoreApp.Data.EF;
+using AloneCoreApp.Data.EF.Repositories;
 using AloneCoreApp.Data.Entities;
+using AloneCoreApp.Data.IRepositories;
 using AloneCoreApp.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -78,10 +82,8 @@ namespace AloneCoreApp.API
            
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
 
-            //services.AddTransient<IProductRepository, ProductRepository>();
-
-            //services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
-            //services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
 
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
