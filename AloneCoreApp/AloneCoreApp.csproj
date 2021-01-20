@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AloneCoreApp.Application\AloneCoreApp.Application.csproj" />
+    <ProjectReference Include="..\AloneCoreApp.Data.EF\AloneCoreApp.Data.EF.csproj" />
+    <ProjectReference Include="..\AloneCoreApp.Data\AloneCoreApp.Data.csproj" />
+    <ProjectReference Include="..\AloneCoreApp.Infrastructure\AloneCoreApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\AloneCore\AloneCoreApp.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
