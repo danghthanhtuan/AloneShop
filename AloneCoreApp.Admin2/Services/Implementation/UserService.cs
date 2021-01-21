@@ -17,15 +17,22 @@ namespace AloneCoreApp.Admin2.Services.Implementation
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Account Login
+        /// </summary>
+        /// <param name="loginRequest"></param>
+        /// <returns></returns>
         public ApiResponse Authenticate(LoginRequest loginRequest)
         {
             var url = _configuration["ApiUrl"];
             var param = "/api/Account/login";
             var dataResult = ApiRequest.Post(url, param, loginRequest, "application/json");
             var dataResponse = dataResult.Content.ReadAsStringAsync().Result;
-            ; var data = CommonFunction.Format<ApiResponse>(dataResponse);
+            var data = CommonFunction.Format<ApiResponse>(dataResponse);
 
-            return new ApiOkResponse(data);
+            if(data != null && data.Success) return data;
+
+            return new ApiBadResponse(data.Messages);
         }
     }
 }

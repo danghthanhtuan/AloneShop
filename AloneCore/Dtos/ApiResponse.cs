@@ -7,20 +7,20 @@ namespace AloneCoreApp.Utilities.Dtos
 {
     public class ApiResponse
     {
-        public int code { get; set; }
-        public bool success { get; set; }
-        public object result { get; set; }
-        public string messages { get; set; }
+        public int Code { get; set; }
+        public bool Success { get; set; }
+        public object Result { get; set; }
+        public string Messages { get; set; }
     }
 
     public class ApiNotFoundResponse : ApiResponse
     {
         public ApiNotFoundResponse(string message)
         {
-            code = (int)HttpStatusCode.NotFound;
-            success = false;
-            result = null;
-            messages = message;
+            Code = (int)HttpStatusCode.NotFound;
+            Success = false;
+            Result = null;
+            Messages = message;
         }
     }
 
@@ -28,10 +28,10 @@ namespace AloneCoreApp.Utilities.Dtos
     {
         public ApiBadResponse(string message)
         {
-            code = (int)HttpStatusCode.BadRequest;
-            success = false;
-            result = null;
-            messages = message;
+            Code = (int)HttpStatusCode.BadRequest;
+            Success = false;
+            Result = null;
+            Messages = message;
         }
     }
 
@@ -39,10 +39,10 @@ namespace AloneCoreApp.Utilities.Dtos
     {
         public ApiOkResponse(object data)
         {
-            code = (int)HttpStatusCode.OK;
-            success = true;
-            result = data;
-            messages = string.Empty;
+            Code = (int)HttpStatusCode.OK;
+            Success = true;
+            Result = data;
+            Messages = string.Empty;
         }
     }
 }

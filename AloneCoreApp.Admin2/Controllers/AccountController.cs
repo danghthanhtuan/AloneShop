@@ -10,6 +10,7 @@ using AloneCoreApp.API.ViewModels;
 using AloneCoreApp.Utilities.Dtos;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
@@ -17,7 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AloneCoreApp.Admin2.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
@@ -29,6 +30,7 @@ namespace AloneCoreApp.Admin2.Controllers
         }
 
         [HttpGet()]
+        [AllowAnonymous]
         public async Task<IActionResult> Login()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -36,18 +38,19 @@ namespace AloneCoreApp.Admin2.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
             // Validate 
-            if (string.IsNullOrEmpty(loginRequest.UserName) || string.IsNullOrEmpty(loginRequest.Password))
+            if (!ModelState.IsValid || loginRequest == null)
             {
                 return Ok(new ApiBadResponse("Tài khoản hoặc mật khẩu không được để trống"));
             }
 
             var token = _userService.Authenticate(loginRequest);
-            if (token != null && token.success)
+            if (token != null && token.Success)
             {
-                var userPrincipal = ValidateToken(token.result.ToString());
+                var userPrincipal = ValidateToken(token.Result.ToString());
                 var authProperties = new AuthenticationProperties
                 {
                     ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(100),
@@ -61,7 +64,14 @@ namespace AloneCoreApp.Admin2.Controllers
                 return Ok(new ApiOkResponse("Home/Index"));
             }
             // Thêm lỗi
-            return Ok(new ApiNotFoundResponse(token.messages));
+            return Ok(new ApiNotFoundResponse(token.Messages));
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login","Account");
         }
 
         public ClaimsPrincipal ValidateToken(string token)

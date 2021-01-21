@@ -31,10 +31,15 @@ namespace AloneCoreApp.Admin2
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Account/Login";
+                    options.LoginPath = $"/Account/Login";
                     options.AccessDeniedPath = "/User/For";
                 });
 
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             services.AddTransient<IUserService, UserService>();
             services.AddControllersWithViews();
         }

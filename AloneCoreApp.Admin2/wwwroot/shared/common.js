@@ -25,7 +25,7 @@
             },
             offset: 20,
             spacing: 10,
-            z_index: 1031,
+            z_index: 9999,
             delay: 5000,
             timer: 1000,
             url_target: '_blank',
@@ -141,15 +141,34 @@
         for (var i = 0; i < arr.length; i += 1) {
             var node = arr[i];
             node.children = [];
-            map[node.Id] = i; // use map to look-up the parents
-            if (node.ParentId !== null) {
-                arr[map[node.ParentId]].children.push(node);
+            map[node.id] = i; // use map to look-up the parents
+            if (node.parentId !== null) {
+                arr[map[node.parentId]].children.push(node);
             } else {
                 roots.push(node);
             }
         }
         return roots;
     },
+    createTree: function (list) {
+        var map = {}, node, roots = [], i;
+
+        for (i = 0; i < list.length; i += 1) {
+            map[list[i].id] = i; // initialize the map
+            list[i].children = []; // initialize the children
+        }
+
+        for (i = 0; i < list.length; i += 1) {
+            node = list[i];
+            if (node.parentId !== null) {
+                // if you have dangling branches check that map[node.parentId] exists
+                list[map[node.parentId]].children.push(node);
+            } else {
+                roots.push(node);
+            }
+        }
+        return roots;
+    }
 }
 
 $(document).ajaxSend(function (e, xhr, options) {

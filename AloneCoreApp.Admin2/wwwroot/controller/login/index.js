@@ -31,11 +31,12 @@
     var login = function (user, pass) {
         $.ajax({
             type: 'POST',
-            data: {
+            data: JSON.stringify( {
                 UserName: user,
                 Password: pass
-            },
-            dateType: 'json',
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
             url: '/Account/Login',
             success: function (res) {
                 if (res.Success) {

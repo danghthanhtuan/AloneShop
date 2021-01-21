@@ -39,7 +39,11 @@ namespace AloneCoreApp.API.Controllers
             _config = config;
         }
 
-
+        /// <summary>
+        /// Account Login
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
@@ -55,7 +59,7 @@ namespace AloneCoreApp.API.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                 if (!result.Succeeded)
                 {
-                    return new BadRequestObjectResult(result.ToString());
+                    return new BadRequestObjectResult(new ApiBadResponse("Error when login"));
                 }
                 var roles = await _userManager.GetRolesAsync(user);
                 var claims = new[]
@@ -82,9 +86,9 @@ namespace AloneCoreApp.API.Controllers
                     signingCredentials: creds);
                 _logger.LogInformation(1, "User logged in.");
 
-                return new OkObjectResult(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                return new OkObjectResult(new ApiOkResponse(new JwtSecurityTokenHandler().WriteToken(token)));
             }
-            return new BadRequestObjectResult("Login failure");
+            return new BadRequestObjectResult(new ApiBadResponse("Error when login"));
         }
 
         [HttpPost]

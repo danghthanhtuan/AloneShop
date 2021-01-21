@@ -57,7 +57,7 @@
                                         <label class="font-weight-semibold" for="userName">Username:</label>
                                         <div class="input-affix">
                                             <i class="prefix-icon anticon anticon-user"></i>
-                                            <input type="text" class="form-control" id="txtUserName" placeholder="Username">
+                                            <input type="text" class="form-control" id="txtUserName" tabindex="1" placeholder="Username">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -65,7 +65,7 @@
                                         <a class="float-right font-size-13 text-muted" href="">Forget Password?</a>
                                         <div class="input-affix m-b-10">
                                             <i class="prefix-icon anticon anticon-lock"></i>
-                                            <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+                                            <input type="password" class="form-control" id="txtPassword" tabindex="2" placeholder="Password">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -95,6 +95,9 @@
 
     <!-- Core Login -->
     <script src="~/controller/login/index.js" asp-append-version="true"></script>
+    <script src="~/shared/notify.js"></script>
+    <script src="~/shared/bootstrap-notify.js"></script>
+    <script src="~/shared/common.js"></script>
     <script>
         var login = new loginController();
         login.initialize();
