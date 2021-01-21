@@ -17,12 +17,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AloneCoreApp.Admin2.Controllers
 {
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
 
-        public LoginController(IUserService userService, IConfiguration configuration)
+        public AccountController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
             _configuration = configuration;
@@ -35,7 +35,7 @@ namespace AloneCoreApp.Admin2.Controllers
             return View();
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
             // Validate 
@@ -45,9 +45,9 @@ namespace AloneCoreApp.Admin2.Controllers
             }
 
             var token = _userService.Authenticate(loginRequest);
-            if (token != null && token.Result.success)
+            if (token != null && token.success)
             {
-                var userPrincipal = ValidateToken(token.Result.result.ToString());
+                var userPrincipal = ValidateToken(token.result.ToString());
                 var authProperties = new AuthenticationProperties
                 {
                     ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(100),
@@ -61,7 +61,7 @@ namespace AloneCoreApp.Admin2.Controllers
                 return Ok(new ApiOkResponse("Home/Index"));
             }
             // Thêm lỗi
-            return Ok(new ApiNotFoundResponse(token.Result.messages));
+            return Ok(new ApiNotFoundResponse(token.messages));
         }
 
         public ClaimsPrincipal ValidateToken(string token)

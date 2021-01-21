@@ -23,7 +23,7 @@ namespace AloneCoreApp.Admin2.Services.Implementation
             var param = "/api/Account/login";
             var dataResult = ApiRequest.Post(url, param, loginRequest, "application/json");
             var dataResponse = dataResult.Content.ReadAsStringAsync().Result;
-            var data = CommonFunction.Format<ApiResponse>(dataResponse);
+            ; var data = CommonFunction.Format<ApiResponse>(dataResponse);
 
             return new ApiOkResponse(data);
         }

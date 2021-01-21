@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AloneCoreApp.API.ViewModels;
 using AloneCoreApp.Data.Entities;
+using AloneCoreApp.Utilities.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,7 @@ namespace AloneCoreApp.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return new BadRequestObjectResult(model);
+                return new OkObjectResult(new ApiBadResponse("Error "));
             }
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user != null)

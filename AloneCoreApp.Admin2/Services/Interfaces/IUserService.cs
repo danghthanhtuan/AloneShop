@@ -9,7 +9,7 @@ namespace AloneCoreApp.Admin2.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<ApiResponse> Authenticate(LoginRequest request);
+        ApiResponse Authenticate(LoginRequest request);
 
         //Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPagings(GetUserPagingRequest request);
 
