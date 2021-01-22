@@ -82,8 +82,14 @@ namespace AloneCoreApp.API
            
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
 
+            //Repositories
             services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddTransient<IFunctionRepository, FunctionRepository>();
+            //Services
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IFunctionService, FunctionService>();
+
+
 
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();

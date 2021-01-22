@@ -10,7 +10,7 @@
             title: '',
             message: message,
             url: '',
-            target: '_top'
+            target: '_blank'
         }, {
             // settings
             element: 'body',
@@ -27,7 +27,7 @@
             spacing: 10,
             z_index: 9999,
             delay: 5000,
-            timer: 1000,
+            timer: 500,
             url_target: '_blank',
             mouse_over: null,
             animate: {

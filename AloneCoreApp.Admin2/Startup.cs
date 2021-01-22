@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AloneCoreApp.Admin2.Services.Implementation;
 using AloneCoreApp.Admin2.Services.Interfaces;
+using AloneCoreApp.Application.Implementation;
+using AloneCoreApp.Application.Interfaces;
+using AloneCoreApp.Data.EF;
+using AloneCoreApp.Data.EF.Repositories;
+using AloneCoreApp.Data.IRepositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,7 +45,12 @@ namespace AloneCoreApp.Admin2
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
-            services.AddTransient<IUserService, UserService>();
+
+
+            services.AddTransient<IUserServiceAdmin, UserServiceAdmin>();
+            services.AddTransient<IFunctionServiceAdmin, FunctionServiceAdmin>();
+            //services.AddTransient<IFunctionService, FunctionService>();
+
             services.AddControllersWithViews();
         }
 

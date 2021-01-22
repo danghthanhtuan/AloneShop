@@ -19,8 +19,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AloneCoreApp.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;

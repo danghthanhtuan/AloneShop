@@ -1,33 +1,41 @@
-﻿var loginController = function () {
+﻿/**
+ * LOGIN JS
+ * */
+
+var loginController = function () {
     this.initialize = function () {
         registerEvents();
     }
 
     var registerEvents = function () {
-        //$('#frmLogin').validate({
-        //    errorClass: 'red',
-        //    ignore: [],
-        //    lang: 'en',
-        //    rules: {
-        //        userName: {
-        //            required: true
-        //        },
-        //        password: {
-        //            required: true
-        //        }
-        //    }
-        //});
         $('#btnLogin').on('click', function (e) {
-            //if ($('#frmLogin').valid()) {
+            
+            if (validateLogin()) {
                 e.preventDefault();
                 var user = $('#txtUserName').val();
                 var password = $('#txtPassword').val();
                 login(user, password);
-            //}
-
+            } else return false;
         });
     }
 
+    // Validata when login
+    function validateLogin() {
+        var user = $('#txtUserName').val();
+        if (user === '' || user === 'underfined') {
+            alone.notify('Tài khoản không được để trống', 'danger');
+            return false;
+        }
+        var pass = $('#txtPassword').val();
+        if (pass === '' || pass === 'underfined') {
+            alone.notify('Mật khẩu không được để trống', 'danger');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Login
     var login = function (user, pass) {
         $.ajax({
             type: 'POST',
@@ -40,10 +48,10 @@
             url: '/Account/Login',
             success: function (res) {
                 if (res.Success) {
-                    window.location.href = "/Home/Index";
+                    window.location.href = '/Home/Index';
                 }
                 else {
-                    alone.notify('Login failed', 'error');
+                    alone.notify(res.Messages, 'danger');
                 }
             }
         })

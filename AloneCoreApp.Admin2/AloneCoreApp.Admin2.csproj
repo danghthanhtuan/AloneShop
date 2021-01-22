@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AloneCoreApp.Application\AloneCoreApp.Application.csproj" />
     <ProjectReference Include="..\AloneCore\AloneCoreApp.Utilities.csproj" />
   </ItemGroup>
 

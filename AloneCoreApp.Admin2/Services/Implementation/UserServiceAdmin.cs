@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace AloneCoreApp.Admin2.Services.Implementation
 {
-    public class UserService : IUserService
+    public class UserServiceAdmin : IUserServiceAdmin
     {
         private readonly IConfiguration _configuration;
 
-        public UserService(IConfiguration configuration)
+        public UserServiceAdmin(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -25,14 +25,16 @@ namespace AloneCoreApp.Admin2.Services.Implementation
         public ApiResponse Authenticate(LoginRequest loginRequest)
         {
             var url = _configuration["ApiUrl"];
-            var param = "/api/Account/login";
+            var param = _configuration["ApiLoginUlr"];
             var dataResult = ApiRequest.Post(url, param, loginRequest, "application/json");
             var dataResponse = dataResult.Content.ReadAsStringAsync().Result;
             var data = CommonFunction.Format<ApiResponse>(dataResponse);
 
             if(data != null && data.Success) return data;
 
-            return new ApiBadResponse(data.Messages);
+            if(data == null)
+                return new ApiBadResponse("Không thể đăng nhập");
+            else return new ApiBadResponse(data.Messages);
         }
     }
 }

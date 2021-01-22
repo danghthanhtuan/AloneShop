@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AloneCoreApp.Admin2.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserServiceAdmin
     {
         ApiResponse Authenticate(LoginRequest request);
 

@@ -20,10 +20,10 @@ namespace AloneCoreApp.Admin2.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly IUserService _userService;
+        private readonly IUserServiceAdmin _userService;
         private readonly IConfiguration _configuration;
 
-        public AccountController(IUserService userService, IConfiguration configuration)
+        public AccountController(IUserServiceAdmin userService, IConfiguration configuration)
         {
             _userService = userService;
             _configuration = configuration;
@@ -61,7 +61,7 @@ namespace AloneCoreApp.Admin2.Controllers
                     userPrincipal,
                     authProperties);
 
-                return Ok(new ApiOkResponse("Home/Index"));
+                return Ok(new ApiOkResponse(""));
             }
             // Thêm lỗi
             return Ok(new ApiNotFoundResponse(token.Messages));
