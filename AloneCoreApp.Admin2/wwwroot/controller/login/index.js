@@ -46,12 +46,17 @@ var loginController = function () {
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             url: '/Account/Login',
+            beforeSend: function () {
+                alone.startLoading();
+            },
             success: function (res) {
                 if (res.Success) {
+                    alone.stopLoading();
                     window.location.href = '/Home/Index';
                 }
                 else {
                     alone.notify(res.Messages, 'danger');
+                    alone.stopLoading();
                 }
             }
         })

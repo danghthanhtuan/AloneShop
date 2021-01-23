@@ -25,7 +25,7 @@ namespace AloneCoreApp.Admin2.Services.Implementation
         public ApiResponse Authenticate(LoginRequest loginRequest)
         {
             var url = _configuration["ApiUrl"];
-            var param = _configuration["ApiLoginUlr"];
+            var param = _configuration["ApiLoginUrl"];
             var dataResult = ApiRequest.Post(url, param, loginRequest, "application/json");
             var dataResponse = dataResult.Content.ReadAsStringAsync().Result;
             var data = CommonFunction.Format<ApiResponse>(dataResponse);

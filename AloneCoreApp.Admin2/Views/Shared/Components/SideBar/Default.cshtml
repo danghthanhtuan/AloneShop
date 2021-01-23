@@ -4,10 +4,10 @@
         <ul class="side-nav-menu scrollable">
             @foreach (var item in Model.Where(x => string.IsNullOrEmpty(x.ParentId)))
             {
-                <li class="nav-item dropdown open">
+                <li class="nav-item dropdown">
                     <a class="dropdown-toggle" href="javascript:void(0);">
                         <span class="icon-holder">
-                            <i class="anticon anticon-dashboard"></i>
+                            <i class="@item.IconCss"></i>
                         </span>
                         <span class="title">@item.Name</span>
                         <span class="arrow">
@@ -16,11 +16,11 @@
                     </a>
                     @if (Model.Any(x => x.ParentId == item.Id))
                     {
-                        <ul class="dropdown-menu">
+                        <ul id="menu" class="dropdown-menu">
                             @foreach (var jitem in Model.Where(x => x.ParentId == item.Id))
                             {
-                                <li class="active">
-                                    <a href="index.html">@jitem.Name</a>
+                                <li>
+                                    <a href="@jitem.URL">@jitem.Name</a>
                                 </li>
                             }
                         </ul>

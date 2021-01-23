@@ -84,11 +84,14 @@ namespace AloneCoreApp.API
 
             //Repositories
             services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IFunctionRepository, FunctionRepository>();
+            services.AddTransient<IProductTagRepository, ProductTagRepository>();
+            services.AddTransient<ITagRepository, TagRepository>();
             //Services
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IFunctionService, FunctionService>();
-
 
 
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using AloneCoreApp.API.ViewModels;
+﻿using AloneCoreApp.API.ViewModels;
 using AloneCoreApp.Data.Entities;
 using AloneCoreApp.Utilities.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -14,12 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AloneCoreApp.API.Controllers
 {
-    public class AccountController : ControllerBase
+    public class AccountController : ApiBaseController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -65,10 +63,10 @@ namespace AloneCoreApp.API.Controllers
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim("fullName", user.FullName),
-                    new Claim("avatar", string.IsNullOrEmpty(user.Avatar)? string.Empty:user.Avatar),
-                    new Claim("roles", string.Join(";",roles)),
-                    new Claim("permissions",""),
+                    new Claim("FullName", user.FullName),
+                    new Claim("Avatar", string.IsNullOrEmpty(user.Avatar) ? string.Empty:user.Avatar),
+                    new Claim("Roles", string.Join(";", roles)),
+                    new Claim("Permissions", ""),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 

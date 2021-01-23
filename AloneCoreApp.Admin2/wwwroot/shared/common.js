@@ -114,11 +114,11 @@
     },
     startLoading: function () {
         if ($('.dv-loading').length > 0)
-            $('.dv-loading').removeClass('hide');
+            $('.dv-loading').addClass('hide');     
     },
     stopLoading: function (status) {
         if ($('.dv-loading').length > 0)
-            $('.dv-loading').addClass('hide');
+            $('.dv-loading').removeClass('hide');
     },
     getStatus: function (status) {
         if (status == 1)

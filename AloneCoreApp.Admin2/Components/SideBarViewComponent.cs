@@ -22,7 +22,7 @@ namespace AloneCoreApp.Admin2.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var roles = ((ClaimsPrincipal)User).GetSpecificClaim("roles");
+            var roles = ((ClaimsPrincipal)User).GetSpecificClaim("Roles");
             List<FunctionViewModel> functions;
 
             if (roles.Split(";").Contains(CommonConstants.AdminRole))
@@ -31,9 +31,9 @@ namespace AloneCoreApp.Admin2.Components
             }
             else
             {
-                // functions = new List<FunctionViewModel>();
+                 functions = new List<FunctionViewModel>();
             }
-            return View();
+            return View(functions);
         }
     }
 }

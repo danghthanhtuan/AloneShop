@@ -8,6 +8,8 @@ namespace AloneCoreApp.Utilities.Constants
     {
         public const string DefaultFooterId = "DefaultFooterId";
 
+        public const string ProductTag = "ProductTag";
+
         public const string AdminRole = "Admin";
     }
 }

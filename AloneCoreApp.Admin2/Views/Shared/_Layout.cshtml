@@ -11,7 +11,7 @@
 
     <!-- page css -->
     <!-- Core css -->
-    @*<link href="~/assets/css/app.min.css" rel="stylesheet">*@
+    <link href="~/assets/css/app.min.css" rel="stylesheet">
     @RenderSection("Style", required: false)
 </head>
 
@@ -379,6 +379,26 @@
     @RenderSection("Scripts", required: false)
     <!-- Core JS -->
     <script src="~/assets/js/app.min.js"></script>
+
+    <script>
+        //$("#menu li a").click(function (e) {
+        //    $(this).parent().addClass('active').siblings().removeClass('active');
+        //    localStorage.ClassName = "active";
+        //});
+        //$(document).ready(function () {
+        //    SetClass();
+        //    if ($(".dropdown-menu").attr("href") == window.location.href) {
+        //        $(".dropdown-menu").attr("style", "display: block;");
+        //    }
+        //    else {
+        //        $(".dropdown-menu").attr("style", "display: none;");
+        //    }
+        //});
+        //function SetClass() {
+        //    before assigning class check local storage if it has any value
+        //    $("#menu li a").addClass(localStorage.ClassName);
+        //}
+    </script>
 </body>
 
 </html>
