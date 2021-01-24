@@ -49,13 +49,14 @@ namespace AloneCoreApp.Data.EF
                 {
                     items = items.Include(includeProperty);
                 }
+                items.AsNoTracking();
             }
             return items.Where(predicate);
         }
 
         public T FindById(K id, params Expression<Func<T, object>>[] includeProperties)
         {
-            return FindAll(includeProperties).SingleOrDefault(x => x.Id.Equals(id));
+            return FindAll(includeProperties).FirstOrDefault(x => x.Id.Equals(id));
         }
 
         public T FindSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)

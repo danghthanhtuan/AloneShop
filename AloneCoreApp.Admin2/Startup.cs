@@ -49,7 +49,7 @@ namespace AloneCoreApp.Admin2
 
             services.AddTransient<IUserServiceAdmin, UserServiceAdmin>();
             services.AddTransient<IFunctionServiceAdmin, FunctionServiceAdmin>();
-            //services.AddTransient<IFunctionService, FunctionService>();
+            services.AddTransient<IProductServiceAdmin, ProductServiceAdmin>();
 
             services.AddControllersWithViews();
         }

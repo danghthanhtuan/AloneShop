@@ -6,7 +6,7 @@
     notify: function (message, type) {
         $.notify({
             // options
-            icon: 'glyphicon glyphicon-warning-sign',
+            icon: '<i class="anticon anticon-check-circle"></i>',
             title: '',
             message: message,
             url: '',
@@ -168,7 +168,18 @@
             }
         }
         return roots;
+    },
+    getParameterByName: function (name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.href);
+        if (results == null)
+            return "";
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
     }
+
 }
 
 $(document).ajaxSend(function (e, xhr, options) {

@@ -79,7 +79,7 @@ namespace AloneCoreApp.API
 
             services.AddSingleton(AutoMapperConfig.RegisterMappings().CreateMapper());
             //services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
-           
+
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
 
             //Repositories
@@ -102,7 +102,9 @@ namespace AloneCoreApp.API
             {
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            });
+            }).AddNewtonsoftJson(option =>
+                option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddSwaggerGen(s =>
             {

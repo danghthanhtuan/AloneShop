@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AloneCoreApp.API.ViewModels;
-using AloneCoreApp.Application.Interfaces;
+﻿using AloneCoreApp.Application.Interfaces;
 using AloneCoreApp.Utilities.Dtos;
+using AloneCoreApp.Utilities.Request;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.API.Controllers
 {
@@ -31,14 +28,28 @@ namespace AloneCoreApp.API.Controllers
         }
 
         [HttpPost]
-        [Route("all")]
-        public async Task<IActionResult> GetAllPaging(ProductPagingViewModel productVm)
+        [Route("paging")]
+        public async Task<IActionResult> GetAllPaging(ProductPagingRequest productVm)
         {
             if(!ModelState.IsValid || productVm == null)
             {
                 return new OkObjectResult(new ApiBadResponse("Không nhận được dữ liệu yêu cầu!"));
             }
             var products = _productService.GetAllPaging(productVm.CategoryId, productVm.Keyword, productVm.Page, productVm.PageSize);
+            if (products != null)
+                return new OkObjectResult(new ApiOkResponse(products));
+            return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));
+        }
+
+        [HttpGet]
+        [Route("find-by-id")]
+        public IActionResult GetById(int productId)
+        {
+            if (productId <= 0)
+            {
+                return new OkObjectResult(new ApiBadResponse("Không nhận được dữ liệu yêu cầu!"));
+            }
+            var products = _productService.GetById(productId);
             if (products != null)
                 return new OkObjectResult(new ApiOkResponse(products));
             return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));

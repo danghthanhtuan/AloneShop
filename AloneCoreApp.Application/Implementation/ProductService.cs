@@ -86,9 +86,9 @@ namespace AloneCoreApp.Application.Implementation
             GC.SuppressFinalize(this);
         }
 
-        public Task<List<ProductViewModel>> GetAll()
+        public async Task<List<ProductViewModel>> GetAll()
         {
-            return _mapper.ProjectTo<ProductViewModel>(_productRepository.FindAll(x => x.ProductCategory)).ToListAsync();
+            return await _mapper.ProjectTo<ProductViewModel>(_productRepository.FindAll(x => x.ProductCategory)).ToListAsync();
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace AloneCoreApp.Application.Implementation
         /// <returns></returns>
         public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
         {
-            var query = _productRepository.FindAll(x => x.Status == Status.Active);
+            var query = _productRepository.FindAll(x => x.Status == Status.Active, x => x.ProductCategory);
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x => x.Name.Contains(keyword) || x.ProductCategory.Name.Contains(keyword));
@@ -131,8 +131,9 @@ namespace AloneCoreApp.Application.Implementation
 
         public ProductViewModel GetById(int id)
         {
-            return _mapper.Map<ProductViewModel>(_productRepository.FindById(id));
-        }
+            return _mapper.Map<Product, ProductViewModel>(_productRepository.FindById(id, x => x.ProductCategory));
+        
+            }
 
         public void Save()
         {

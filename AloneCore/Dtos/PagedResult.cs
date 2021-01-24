@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.Utilities.Dtos
 {
@@ -11,6 +12,6 @@ namespace AloneCoreApp.Utilities.Dtos
             Results = new List<T>();
         }
 
-        public IList<T> Results { get; set; }
+        public List<T> Results { get; set; }
     }
 }

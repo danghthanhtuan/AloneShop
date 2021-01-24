@@ -15,7 +15,8 @@ namespace AloneCoreApp.Data.Entities
 
         public Product()
         {
-            // ProductTags = new List<ProductTag>();
+            
+            ProductTags = new List<ProductTag>();
         }
 
         public Product(string name, int categoryId, string thumbnailImage,

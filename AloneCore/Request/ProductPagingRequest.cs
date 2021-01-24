@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.API.ViewModels
+namespace AloneCoreApp.Utilities.Request
 {
-    public class ProductPagingViewModel
+    public class ProductPagingRequest
     {
         public int? CategoryId { get; set; }
         public int Page { get; set; }

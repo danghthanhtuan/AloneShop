@@ -12,7 +12,12 @@
     <!-- page css -->
     <!-- Core css -->
     <link href="~/assets/css/app.min.css" rel="stylesheet">
-    @RenderSection("Style", required: false)
+
+    <link href="~/assets/css/animate.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    @RenderSection("Styles", required: false)
 </head>
 
 <body>
@@ -21,13 +26,13 @@
             <!-- Header START -->
             <div class="header">
                 <div class="logo logo-dark">
-                    <a href="index.html">
+                    <a href="/home/index">
                         <img src="~/assets/images/logo/logo.png" alt="Logo">
                         <img class="logo-fold" src="~/assets/images/logo/logo-fold.png" alt="Logo">
                     </a>
                 </div>
                 <div class="logo logo-white">
-                    <a href="index.html">
+                    <a href="/home/index">
                         <img src="~/assets/images/logo/logo-white.png" alt="Logo">
                         <img class="logo-fold" src="~/assets/images/logo/logo-fold-white.png" alt="Logo">
                     </a>
@@ -189,6 +194,17 @@
 
                 <!-- Content Wrapper START -->
                 <div class="main-content">
+                    <div class="page-header">
+                        <h2 class="header-title">Orders List</h2>
+                        <div class="header-sub-title">
+                            <nav class="breadcrumb breadcrumb-dash">
+                                <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                                <a class="breadcrumb-item" href="#">Apps</a>
+                                <a class="breadcrumb-item" href="#">E-commerce</a>
+                                <span class="breadcrumb-item active">Orders List</span>
+                            </nav>
+                        </div>
+                    </div>
                     @RenderBody()
                 </div>
                 <!-- Content Wrapper END -->
@@ -370,7 +386,6 @@
         </div>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
     <!-- Core Vendors JS -->
     <script src="~/assets/js/vendors.min.js"></script>
 
@@ -379,25 +394,28 @@
     @RenderSection("Scripts", required: false)
     <!-- Core JS -->
     <script src="~/assets/js/app.min.js"></script>
+    <script src="~/shared/notify.js"></script>
+    <script src="~/shared/bootstrap-notify.js"></script>
 
     <script>
-        //$("#menu li a").click(function (e) {
-        //    $(this).parent().addClass('active').siblings().removeClass('active');
-        //    localStorage.ClassName = "active";
-        //});
-        //$(document).ready(function () {
-        //    SetClass();
-        //    if ($(".dropdown-menu").attr("href") == window.location.href) {
-        //        $(".dropdown-menu").attr("style", "display: block;");
-        //    }
-        //    else {
-        //        $(".dropdown-menu").attr("style", "display: none;");
-        //    }
-        //});
-        //function SetClass() {
-        //    before assigning class check local storage if it has any value
-        //    $("#menu li a").addClass(localStorage.ClassName);
-        //}
+        // Keep
+        $("#menu li a").click(function (e) {
+            $(this).parent().addClass('active').siblings().removeClass('active');
+            localStorage.setItem('lastTab', $(this).attr('href'));
+        });
+
+        var pathname = window.location.pathname.toLowerCase(); // Returns path only (/path/example.html)
+        var lastTab = localStorage.getItem('lastTab').toLowerCase();
+
+        if (pathname.indexOf(lastTab) != -1) {
+            $('[href="' + lastTab + '"]').parent().addClass('active');
+        } else {
+            if ($('[href="' + pathname + '"]').find('a') > 0) {
+                $('[href="' + pathname + '"]').parent().addClass('active');
+            } else {
+                $('[href="' + lastTab + '"]').parent().addClass('active');
+            }
+        }
     </script>
 </body>
 

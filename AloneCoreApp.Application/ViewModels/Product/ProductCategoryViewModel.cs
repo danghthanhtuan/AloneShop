@@ -1,6 +1,7 @@
 ﻿using AloneCoreApp.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AloneCoreApp.Application.ViewModels.Product
 {
@@ -22,6 +23,6 @@ namespace AloneCoreApp.Application.ViewModels.Product
         public DateTime DateModified { get; set; }
         public int SortOrder { get; set; }
 
-        public ICollection<ProductViewModel> Products { get; set; }
+        public virtual ICollection<ProductViewModel> Products { get; set; }
     }
 }
