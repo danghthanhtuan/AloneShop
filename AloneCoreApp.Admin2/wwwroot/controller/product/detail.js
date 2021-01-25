@@ -2,9 +2,16 @@
     this.initialize = function () {
         loadData();
         //loadCategories();
-        //registerEvents();
+        registerEvents();
         //registerControls();
     }
+    function registerEvents() {
+        $('#btnBack').on('click', function () {
+            var url = alone.getParameterByName('source');
+            window.location.replace(alone.getParameterByName('source'));    
+        });
+    }
+
 
     function loadData() {
         $.ajax({

@@ -55,7 +55,12 @@
         $('body').on('click', '.btn-edit', function (e) {
             e.preventDefault();
             var id = $(this)[0].id;
-            window.location.replace('detail?id='+ id);
+
+
+            var source = encodeURIComponent(window.location.pathname);
+
+
+            window.location.replace('detail?id=' + id + '&source=' + source);
         });
         $('body').on('click', '.btn-delete', function (e) {
             e.preventDefault();

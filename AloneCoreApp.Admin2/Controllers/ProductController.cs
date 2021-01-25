@@ -26,6 +26,7 @@ namespace AloneCoreApp.Admin2.Controllers
             return View();
         }
 
+
         public IActionResult Detail()
         {
             return View();

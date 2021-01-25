@@ -33,7 +33,7 @@ namespace AloneCoreApp.Admin2.Components
             {
                  functions = new List<FunctionViewModel>();
             }
-            return View(functions);
+            return View(functions.OrderBy(x => x.SortOrder).ToList());
         }
     }
 }
