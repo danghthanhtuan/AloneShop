@@ -35,7 +35,7 @@ namespace AloneCoreApp.API.Controllers
             {
                 return new OkObjectResult(new ApiBadResponse("Không nhận được dữ liệu yêu cầu!"));
             }
-            var products = _productService.GetAllPaging(productVm.CategoryId, productVm.Keyword, productVm.Page, productVm.PageSize);
+            var products = await _productService.GetAllPaging(productVm.CategoryId, productVm.Keyword, productVm.Page, productVm.PageSize);
             if (products != null)
                 return new OkObjectResult(new ApiOkResponse(products));
             return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));

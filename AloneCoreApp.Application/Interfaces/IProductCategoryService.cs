@@ -1,5 +1,6 @@
 ﻿using AloneCoreApp.Application.ViewModels.Product;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.Application.Interfaces
 {
@@ -11,13 +12,13 @@ namespace AloneCoreApp.Application.Interfaces
 
         void Delete(int id);
 
-        List<ProductCategoryViewModel> GetAll();
+        Task<List<ProductCategoryViewModel>> GetAll();
 
         List<ProductCategoryViewModel> GetAll(string keyword);
 
         List<ProductCategoryViewModel> GetByParentId(int parentId);
 
-        ProductCategoryViewModel GetById(int id);
+        Task<ProductCategoryViewModel> GetById(int id);
 
         void UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items);
 

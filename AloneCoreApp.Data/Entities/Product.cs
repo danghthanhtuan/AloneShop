@@ -14,8 +14,7 @@ namespace AloneCoreApp.Data.Entities
     {
 
         public Product()
-        {
-            
+        {      
             ProductTags = new List<ProductTag>();
         }
 

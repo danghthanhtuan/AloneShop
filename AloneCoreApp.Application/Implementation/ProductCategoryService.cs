@@ -6,10 +6,12 @@ using AloneCoreApp.Data.IRepositories;
 using AloneCoreApp.Infrastructure.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.Application.Implementation
 {
@@ -41,9 +43,12 @@ namespace AloneCoreApp.Application.Implementation
             _productCategoryRepository.Remove(id);
         }
 
-        public List<ProductCategoryViewModel> GetAll()
+        public async Task<List<ProductCategoryViewModel>> GetAll()
         {
-            return _mapper.ProjectTo<ProductCategoryViewModel>(_productCategoryRepository.FindAll().OrderBy(x => x.ParentId)).ToList();
+            return await _mapper.ProjectTo<ProductCategoryViewModel>(_productCategoryRepository
+                    .FindAll()
+                    .OrderBy(x => x.SortOrder))
+                    .ToListAsync();
         }
 
         public List<ProductCategoryViewModel> GetAll(string keyword)
@@ -61,9 +66,9 @@ namespace AloneCoreApp.Application.Implementation
             }
         }
 
-        public ProductCategoryViewModel GetById(int id)
+        public async Task<ProductCategoryViewModel> GetById(int id)
         {
-            return _mapper.Map<ProductCategory, ProductCategoryViewModel>(_productCategoryRepository.FindById(id));
+            return _mapper.Map<ProductCategory, ProductCategoryViewModel>(await _productCategoryRepository.FindByIdAsync(id));
         }
 
         public List<ProductCategoryViewModel> GetByParentId(int parentId)

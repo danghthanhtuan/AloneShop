@@ -99,7 +99,7 @@ namespace AloneCoreApp.Application.Implementation
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
+        public async Task<PagedResult<ProductViewModel>> GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active, x => x.ProductCategory);
             if (!string.IsNullOrEmpty(keyword))
@@ -111,22 +111,20 @@ namespace AloneCoreApp.Application.Implementation
                 query = query.Where(x => x.CategoryId == categoryId.Value);
             }
 
-            var totalRow = query.Count();
+            var totalRow = await query.CountAsync();
 
             query = query.OrderByDescending(x => x.DateCreated)
                 .Skip((page - 1) * pageSize).Take(pageSize);
 
-            var data = _mapper.ProjectTo<ProductViewModel>(query).ToList();
-
-            var paging = new PagedResult<ProductViewModel>()
+            var products = await _mapper.ProjectTo<ProductViewModel>(query).ToListAsync();
+           
+            return new PagedResult<ProductViewModel>()
             {
-                Results = data,
+                Results = products,
                 CurrentPage = page,
                 RowCount = totalRow,
                 PageSize = pageSize
             };
-
-            return paging;
         }
 
         public ProductViewModel GetById(int id)

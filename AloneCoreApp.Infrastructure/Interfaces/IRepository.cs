@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.Infrastructure.Interfaces
 {
@@ -10,7 +11,11 @@ namespace AloneCoreApp.Infrastructure.Interfaces
     {
         T FindById(K id, params Expression<Func<T, object>>[] includeProperties);
 
+        Task<T> FindByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties);
+
         T FindSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
+
+        Task<T> FindSingleAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
 
         IQueryable<T> FindAll(params Expression<Func<T, object>>[] includeProperties);
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.Data.EF
 {
@@ -49,9 +50,13 @@ namespace AloneCoreApp.Data.EF
                 {
                     items = items.Include(includeProperty);
                 }
-                items.AsNoTracking();
             }
             return items.Where(predicate);
+        }
+
+        public virtual async Task<T> FindByIdAsync(K id, params Expression<Func<T, object>>[] includeProperties)
+        {
+            return await FindAll(includeProperties).FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public T FindById(K id, params Expression<Func<T, object>>[] includeProperties)
@@ -62,6 +67,10 @@ namespace AloneCoreApp.Data.EF
         public T FindSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             return FindAll(includeProperties).SingleOrDefault(predicate);
+        }
+        public async Task<T> FindSingleAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        {
+            return await FindAll(includeProperties).SingleOrDefaultAsync(predicate);
         }
 
         public void Remove(T entity)
@@ -76,7 +85,7 @@ namespace AloneCoreApp.Data.EF
 
         public void RemoveMultiple(List<T> entities)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().RemoveRange(entities);
         }
 
         public void Update(T entity)

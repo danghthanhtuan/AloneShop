@@ -21,6 +21,6 @@ namespace AloneCoreApp.Application.Interfaces
 
         ProductViewModel GetById(int id);
 
-        PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize);
+        Task<PagedResult<ProductViewModel>> GetAllPaging(int? categoryId, string keyword, int page, int pageSize);
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AloneCoreApp.Application.Interfaces;
+using AloneCoreApp.Application.ViewModels.Product;
+using AloneCoreApp.Data.Entities;
 using AloneCoreApp.Utilities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +21,19 @@ namespace AloneCoreApp.API.Controllers
 
         [HttpGet]
         [Route("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var productCategorys = _productCategoryService.GetAll();
+            var productCategorys = await _productCategoryService.GetAll();
             if (productCategorys != null)
-                return new OkObjectResult(new ApiOkResponse(productCategorys));
-            return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));
+            {
+                // The reason : the Result has a Product list for each ProductCategory
+                // If you need a list of Products, remove the line below
+                productCategorys.ForEach(x => x.Products = new List<ProductViewModel>());
 
+                return new OkObjectResult(new ApiOkResponse(productCategorys));
+            }
+                
+            return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));
         }
 
         [HttpGet]
@@ -36,7 +44,7 @@ namespace AloneCoreApp.API.Controllers
             {
                 return new OkObjectResult(new ApiBadResponse("Không nhận được dữ liệu yêu cầu!"));
             }
-            var products = _productCategoryService.GetById(id);
+            var products = await _productCategoryService.GetById(id);
             if (products != null)
                 return new OkObjectResult(new ApiOkResponse(products));
             return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));
