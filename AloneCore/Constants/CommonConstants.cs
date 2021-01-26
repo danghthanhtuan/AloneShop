@@ -14,4 +14,11 @@ namespace AloneCoreApp.Utilities.Constants
 
         public const string ContentTypeJson = "application/json";
     }
+
+    public class CommonError
+    {
+        public const string NOT_RECEIVE_REQUEST_DATA = "Không nhận được dữ liệu yếu cầu";
+
+        public const string DATA_NOT_FOUND = "Không tìm thấy dữ liệu";
+    }
 }

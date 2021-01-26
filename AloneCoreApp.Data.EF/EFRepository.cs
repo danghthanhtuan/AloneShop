@@ -75,12 +75,12 @@ namespace AloneCoreApp.Data.EF
 
         public void Remove(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            _context.Set<T>().Update(entity);
         }
 
-        public void Remove(K id)
-        {
-            Remove(FindById(id));
+        public virtual async void Remove(K id)
+        {         
+           Update(await FindByIdAsync(id));
         }
 
         public void RemoveMultiple(List<T> entities)
@@ -89,7 +89,7 @@ namespace AloneCoreApp.Data.EF
         }
 
         public void Update(T entity)
-        {
+        {        
             _context.Set<T>().Update(entity);
         }
     }

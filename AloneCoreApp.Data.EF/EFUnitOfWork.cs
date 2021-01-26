@@ -16,12 +16,12 @@ namespace AloneCoreApp.Data.EF
 
         public void Commit()
         {
-            _context.SaveChanges(); 
+           _context.SaveChanges(); 
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+           _context.Dispose();
         }
     }
 }

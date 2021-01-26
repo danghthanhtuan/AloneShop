@@ -4,5 +4,6 @@
     {
         InActive,
         Active,
+        Deleted
     }
 }

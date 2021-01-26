@@ -19,7 +19,7 @@ namespace AloneCoreApp.Application.Interfaces
 
         void Save();
 
-        ProductViewModel GetById(int id);
+        Task<ProductViewModel> GetByIdAsync(int id);
 
         Task<PagedResult<ProductViewModel>> GetAllPaging(int? categoryId, string keyword, int page, int pageSize);
     }

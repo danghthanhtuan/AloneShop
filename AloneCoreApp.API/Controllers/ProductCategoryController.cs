@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AloneCoreApp.Application.Interfaces;
 using AloneCoreApp.Application.ViewModels.Product;
 using AloneCoreApp.Data.Entities;
+using AloneCoreApp.Utilities.Constants;
 using AloneCoreApp.Utilities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,7 @@ namespace AloneCoreApp.API.Controllers
                 return new OkObjectResult(new ApiOkResponse(productCategorys));
             }
                 
-            return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));
+            return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
         }
 
         [HttpGet]
@@ -42,12 +43,12 @@ namespace AloneCoreApp.API.Controllers
         {
             if (id <= 0)
             {
-                return new OkObjectResult(new ApiBadResponse("Không nhận được dữ liệu yêu cầu!"));
+                return new OkObjectResult(new ApiBadResponse(CommonError.NOT_RECEIVE_REQUEST_DATA));
             }
             var products = await _productCategoryService.GetById(id);
             if (products != null)
                 return new OkObjectResult(new ApiOkResponse(products));
-            return new OkObjectResult(new ApiNotFoundResponse("Không tìm thấy dữ liệu"));
+            return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
         }
     }
 }

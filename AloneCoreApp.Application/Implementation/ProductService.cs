@@ -78,7 +78,10 @@ namespace AloneCoreApp.Application.Implementation
 
         public void Delete(int id)
         {
-            _productRepository.Remove(id);
+            var entity = _productRepository.FindById(id);
+            if (entity == null) return;
+            entity.Status = Status.Deleted;
+            _productRepository.Update(entity);
         }
 
         public void Dispose()
@@ -92,10 +95,10 @@ namespace AloneCoreApp.Application.Implementation
         }
 
         /// <summary>
-        /// Lấy danh sách Product phân trang
+        /// Get List Product paging
         /// </summary>
-        /// <param name="categoryId">Lọc theo categoryId</param>
-        /// <param name="keyword">Lọc theo keyword</param>
+        /// <param name="categoryId">Filter categoryId</param>
+        /// <param name="keyword">Filter keyword</param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
@@ -117,7 +120,7 @@ namespace AloneCoreApp.Application.Implementation
                 .Skip((page - 1) * pageSize).Take(pageSize);
 
             var products = await _mapper.ProjectTo<ProductViewModel>(query).ToListAsync();
-           
+
             return new PagedResult<ProductViewModel>()
             {
                 Results = products,
@@ -127,15 +130,14 @@ namespace AloneCoreApp.Application.Implementation
             };
         }
 
-        public ProductViewModel GetById(int id)
+        public async Task<ProductViewModel> GetByIdAsync(int id)
         {
-            return _mapper.Map<Product, ProductViewModel>(_productRepository.FindById(id, x => x.ProductCategory));
-        
-            }
+            return _mapper.Map<Product, ProductViewModel>(await _productRepository.FindByIdAsync(id, x => x.ProductCategory));
+        }
 
         public void Save()
         {
-            _unitOfWork.Commit();
+           _unitOfWork.Commit();
         }
 
         public void Update(ProductViewModel productVm)
