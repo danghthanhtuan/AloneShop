@@ -79,7 +79,6 @@ namespace AloneCoreApp.Application.Implementation
                 PhoneNumber = x.PhoneNumber,
                 Status = x.Status,
                 DateCreated = x.DateCreated
-
             }).ToList();
             var paginationSet = new PagedResult<AppUserViewModel>()
             {
