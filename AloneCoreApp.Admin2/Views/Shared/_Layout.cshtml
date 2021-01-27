@@ -405,12 +405,17 @@
         });
 
         var pathname = window.location.pathname.toLowerCase(); // Returns path only (/path/example.html)
-        var lastTab = localStorage.getItem('lastTab').toLowerCase();
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab === null) {
+            $('[href="/home/index"]').parent().addClass('active');
+        } else {
+            lastTab.toLowerCase();
+        }
 
         if (pathname.indexOf(lastTab) != -1) {
             $('[href="' + lastTab + '"]').parent().addClass('active');
         } else {
-            if ($('[href="' + pathname + '"]').find('a') > 0) {
+            if ($('[href="' + pathname + '"]').length > 0) {
                 $('[href="' + pathname + '"]').parent().addClass('active');
             } else {
                 $('[href="' + lastTab + '"]').parent().addClass('active');
