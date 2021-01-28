@@ -1,7 +1,7 @@
 ﻿var productController = function () {
     this.initialize = function () {
         init();
-        //loadCategories();
+        loadCategories();
         registerEvents();
         //registerControls();
     }
@@ -30,18 +30,17 @@
         //        }
         //    }
         //});
-        //$('body').on('keypress', 'input[type="search"]', function (e) {
-        //    //e.preventDefault();
-        //    if (e.key === 'Enter' || e.keyCode === 13) {
-        //        alone.notify('test', 'error');
-        //    }
-        //});
+        $('body').on('keypress', 'input[type="search"]', function (e) {
+            //e.preventDefault();
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                $('#tblProduct').DataTable().ajax.reload();
+            }
+        });
 
         // Event on change ddlCategory
-        //$("#ddlCategory").on('change', function (e) {
-        //    var table = $('#productDatatable').DataTable();
-        //    table.ajax.reload();
-        //})
+        $("#ddlCategory").on('change', function (e) {
+            $('#tblProduct').DataTable().ajax.reload();
+        })
         //$("#ddlCategory").select2({
         //    tags: true
         //});
@@ -55,11 +54,7 @@
         $('body').on('click', '.btn-edit', function (e) {
             e.preventDefault();
             var id = $(this)[0].id;
-
-
             var source = encodeURIComponent(window.location.pathname);
-
-
             window.location.replace('detail?id=' + id + '&source=' + source);
         });
         $('body').on('click', '.btn-delete', function (e) {
@@ -77,7 +72,7 @@
                     success: function (response) {
                         alone.notify('Delete successful', 'success');
                         alone.stopLoading();
-                        $('#productDatatable').DataTable().ajax.reload();
+                        $('#tblProduct').DataTable().ajax.reload();
                     },
                     error: function (status) {
                         alone.notify('Has an error in delete progress', 'error');
@@ -183,17 +178,17 @@
     function loadCategories() {
         $.ajax({
             type: "GET",
-            url: "/Product/GetAllCategory",
+            url: "/Product/GetAllProductCategory",
             dataType: 'json',
-            success: function (response) {
+            success: function (res) {
                 var render = "<option value=''>--- Select Category ---</option>";
-                $.each(response, function (i, item) {
+                $.each(res.Result, function (i, item) {
                     render += "<option value='" + item.Id + "'>" + item.Name + "</option>";
                 });
                 $("#ddlCategory").html(render);
             },
             error: function (status) {
-                alone.notify('Cannot load data of ProductCategory', 'error');
+                alone.notify('Cannot load data of ProductCategory', 'danger');
             }
         })
     }
@@ -206,7 +201,7 @@
             search: false,
             searching: true,
             scrollY: false,
-            bLengthChange: false, 
+            bLengthChange: false,
             language: {
                 info: "Hiện thị _START_ đến _END_ của _TOTAL_ mục",
                 lengthMenu: "Hiện thị _MENU_ mục",
@@ -228,10 +223,10 @@
                     var currentPageIndex = Math.ceil(settings._iDisplayStart / settings._iDisplayLength) + 1;
                     var request =
                     {
-                        CategoryId: null,
+                        CategoryId: parseInt($('#ddlCategory').val(), 10),
                         PageSize: alone.configs.pageSize,
                         Page: currentPageIndex,
-                        Keyword: ''
+                        Keyword: $('.dataTables_filter input[type="search"]').val()
                     };
                     return JSON.stringify(request);
                 },
@@ -246,6 +241,11 @@
                 },
                 dataFilter: function (data) {
                     var page = $.parseJSON(data);
+                    if (page.Result == null) {
+                        page.recordsTotal = 0;
+                        page.recordsFiltered = 0;
+                        return JSON.stringify(page);
+                    }
                     page.recordsTotal = page.Result.RowCount;
                     page.recordsFiltered = page.Result.RowCount;
                     return JSON.stringify(page);
@@ -259,9 +259,9 @@
                 {
                     "data": null, render: function (data, type, row) {
                         return '<div class="d-flex align-items-center">' +
-                               '<img class="img-fluid rounded" src="../assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">' +
-                               '<h6 class="m-b-0 m-l-10">' + row.Name +
-                               '</h6></div>';
+                            '<img class="img-fluid rounded" src="../assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">' +
+                            '<h6 class="m-b-0 m-l-10">' + row.Name +
+                            '</h6></div>';
                     },
                     "width": "20%"
                 },
@@ -274,7 +274,7 @@
                             '<div class="badge badge-success badge-dot m-r-10"></div>' +
                             '<div>aa</div>  </div>';
                     },
-                    "width" : '10%'
+                    "width": '10%'
                 },
                 {
                     mRender: function (data, type, row) {
@@ -290,7 +290,7 @@
                 $("#tblProduct label input").attr('id', 'search_box');
                 var input = $('.dataTables_filter input').unbind(),
                     self = this.api(),
-                    $searchButton = $('<a href="javascript:void(0);"'+
+                    $searchButton = $('<a href="javascript:void(0);"' +
                         '<i class="anticon anticon-search"></i></a>')
                         .click(function () {
                             self.search(input.val()).draw();

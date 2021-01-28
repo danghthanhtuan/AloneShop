@@ -54,13 +54,31 @@ namespace AloneCoreApp.Admin2.Controllers
         }
 
         /// <summary>
+        /// Get All Product Category
+        /// </summary>
+        /// <param name="productVm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetAllProductCategory()
+        {
+            var categorys = _productServiceAdmin.GetAllProductCategory();
+            if (categorys != null)
+            {
+                return Ok(new ApiOkResponse(categorys));
+            }
+            // Thêm lỗi
+            return Ok(new ApiNotFoundResponse(""));
+        }
+
+        /// <summary>
         /// Get Detail Of A Product
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult GetProductDetail([FromQuery]int productId)
+        public IActionResult GetProductDetail([FromQuery] int productId)
         {
             // Validate 
             if (!ModelState.IsValid || productId <= 0)
