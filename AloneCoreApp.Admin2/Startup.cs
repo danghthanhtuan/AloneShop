@@ -46,7 +46,6 @@ namespace AloneCoreApp.Admin2
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
 
-
             services.AddTransient<IUserServiceAdmin, UserServiceAdmin>();
             services.AddTransient<IFunctionServiceAdmin, FunctionServiceAdmin>();
             services.AddTransient<IProductServiceAdmin, ProductServiceAdmin>();

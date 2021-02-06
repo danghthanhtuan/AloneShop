@@ -92,7 +92,7 @@ namespace AloneCoreApp.API
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IFunctionService, FunctionService>();
-
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();

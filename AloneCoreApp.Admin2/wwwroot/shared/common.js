@@ -113,12 +113,14 @@
         return day + "/" + month + "/" + year + " " + hh + ":" + mm + ":" + ss;
     },
     startLoading: function () {
-        if ($('.dv-loading').length > 0)
-            $('.dv-loading').addClass('hide');     
+        if ($('body.loading').length <= 0) {
+            $('body').addClass('loading');
+        }
     },
     stopLoading: function (status) {
-        if ($('.dv-loading').length > 0)
-            $('.dv-loading').removeClass('hide');
+        if ($('body.loading').length > 0) {
+            $('body.loading').removeClass('loading');
+        }    
     },
     getStatus: function (status) {
         if (status == 1)

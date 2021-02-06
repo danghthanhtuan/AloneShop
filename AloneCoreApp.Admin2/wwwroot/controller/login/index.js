@@ -8,8 +8,7 @@ var loginController = function () {
     }
 
     var registerEvents = function () {
-        $('#btnLogin').on('click', function (e) {
-            
+        $('#btnLogin').on('click', function (e) {         
             if (validateLogin()) {
                 e.preventDefault();
                 var user = $('#txtUserName').val();

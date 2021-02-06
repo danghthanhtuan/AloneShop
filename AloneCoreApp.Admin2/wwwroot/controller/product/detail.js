@@ -7,11 +7,15 @@
     }
     function registerEvents() {
         $('#btnBack').on('click', function () {
-            var url = alone.getParameterByName('source');
             window.location.replace(alone.getParameterByName('source'));    
         });
-    }
 
+        $('#btnEdit').on('click', function (e) {
+            e.preventDefault();
+            var source = encodeURIComponent(window.location.search);
+            window.location.replace('productregister?id=' + alone.getParameterByName('id') + '&source=' + source);
+        });
+    }
 
     function loadData() {
         $.ajax({

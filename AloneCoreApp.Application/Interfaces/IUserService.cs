@@ -1,6 +1,9 @@
-﻿using System;
+﻿using AloneCoreApp.Application.ViewModels.System;
+using AloneCoreApp.Utilities.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AloneCoreApp.Application.Interfaces
 {
@@ -15,7 +18,6 @@ namespace AloneCoreApp.Application.Interfaces
         PagedResult<AppUserViewModel> GetAllPagingAsync(string keyword, int page, int pageSize);
 
         Task<AppUserViewModel> GetById(string id);
-
 
         Task UpdateAsync(AppUserViewModel userVm);
     }

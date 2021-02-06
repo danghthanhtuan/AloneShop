@@ -47,6 +47,20 @@ namespace AloneCoreApp.API.Controllers
             return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
         }
 
+        /// <summary>
+        /// Get All Product Category
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("category-all")]
+        public async Task<IActionResult> GetAllProductCategory()
+        {
+            var productCategorys = await _productCategoryService.GetAll();
+            if (productCategorys != null)
+                return new OkObjectResult(new ApiOkResponse(productCategorys));
+            return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
+        }
+
         [HttpPost]
         [Route("paging")]
         public async Task<IActionResult> GetAllPaging(ProductPagingRequest productVm)

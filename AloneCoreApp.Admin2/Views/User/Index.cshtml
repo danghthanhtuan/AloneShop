@@ -5,11 +5,11 @@
 
 @section Styles{
     <link href="~/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+    <script src="~/assets/js/pages/e-commerce-order-list.js"></script>
 }
 @section Scripts{
     <script src="~/assets/vendors/datatables/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="~/assets/js/pages/e-commerce-order-list.js"></script>
     <script src="~/controller/product/index.js"></script>
     <script>
         var prouct = new productController();
@@ -22,7 +22,12 @@
             <div class="col-lg-8">
                 <div class="d-md-flex">
                     <div class="m-b-10 m-r-15">
-                        <select id="ddlCategory" class="custom-select" style="min-width: 200px;">
+                        <select class="custom-select" style="min-width: 180px;">
+                            <option selected>Catergory</option>
+                            <option value="all">All</option>
+                            <option value="homeDeco">Home Decoration</option>
+                            <option value="eletronic">Eletronic</option>
+                            <option value="jewellery">Jewellery</option>
                         </select>
                     </div>
                     <div class="m-b-10">
@@ -36,7 +41,7 @@
                 </div>
             </div>
             <div class="col-lg-4 text-right">
-                <button id="btnAddProduct" class="btn btn-primary">
+                <button class="btn btn-primary">
                     <i class="anticon anticon-plus-circle m-r-5"></i>
                     <span>Add Product</span>
                 </button>
@@ -46,7 +51,7 @@
             <table id="tblProduct" class="table table-hover e-commerce-table">
                 <thead>
                     <tr>
-                        <th>Code</th>
+                        <th>Name</th>
                         <th>Product</th>
                         <th>Price</th>
                         <th>PromotionPrice</th>

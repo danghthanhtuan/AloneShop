@@ -896,4 +896,12 @@
 @section Scripts {
     <script src="~/assets/vendors/chartjs/Chart.min.js"></script>
     <script src="~/assets/js/pages/dashboard-default.js"></script>
+    <script>
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab === null) {
+            $('[href="/home/index"]').parent().addClass('active');
+        } else {
+            $('[href="' + lastTab + '"]').parent().removeClass('active');
+        }
+    </script>
 }
