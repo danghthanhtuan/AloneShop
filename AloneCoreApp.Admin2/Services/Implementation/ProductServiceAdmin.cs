@@ -69,5 +69,48 @@ namespace AloneCoreApp.Admin2.Services.Implementation
 
             return null;
         }
+
+        public ProductViewModel AddProduct(ProductViewModel product)
+        {
+            var dataResult = ApiRequest.Post(_config[Constants.API_URL],
+                                _config[Constants.API_ADD_PRODUCT],
+                                product,
+                                CommonConstants.ContentTypeJson);
+            var dataResponse = dataResult.Content.ReadAsStringAsync().Result;
+            var data = CommonFunction.Format<ApiResponse>(dataResponse);
+
+            if (data != null && data.Success)
+            {
+                return CommonFunction.Format<ProductViewModel>(data.Result);
+            }
+
+            return null;
+        }
+
+        #region UPDATE
+
+        /// <summary>
+        /// Update Product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public ProductViewModel UpdateProduct(ProductViewModel product)
+        {
+            var dataResult = ApiRequest.Post(_config[Constants.API_URL],
+                                _config[Constants.API_UPDATE_PRODUCT],
+                                product,
+                                CommonConstants.ContentTypeJson);
+            var dataResponse = dataResult.Content.ReadAsStringAsync().Result;
+            var data = CommonFunction.Format<ApiResponse>(dataResponse);
+
+            if (data != null && data.Success)
+            {
+                return CommonFunction.Format<ProductViewModel>(data.Result);
+            }
+
+            return null;
+        }
+
+        #endregion
     }
 }

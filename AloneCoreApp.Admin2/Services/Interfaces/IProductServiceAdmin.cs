@@ -14,5 +14,9 @@ namespace AloneCoreApp.Admin2.Services.Interfaces
         ProductViewModel GetProductDetail(int productId);
 
         List<ProductCategoryViewModel> GetAllProductCategory();
+
+        ProductViewModel AddProduct(ProductViewModel productVm);
+
+        ProductViewModel UpdateProduct(ProductViewModel productVm);
     }
 }

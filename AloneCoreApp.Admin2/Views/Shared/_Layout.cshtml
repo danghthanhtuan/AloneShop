@@ -11,23 +11,25 @@
 
     <!-- page css -->
     <!-- Core css -->
-    <link href="~/assets/css/app.min.css" rel="stylesheet">
 
     <link href="~/assets/css/animate.css" rel="stylesheet" />
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
 
     @RenderSection("Styles", required: false)
+
+    <link href="~/assets/css/app.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="app">
-        <div class="layout">
+        <div class="layout is-side-nav-dark">
             <!-- Header START -->
             <div class="header">
                 <div class="logo logo-dark">
                     <a href="/home/index">
-                        <img src="~/assets/images/logo/logo.png" alt="Logo">
+                        <img src="~/assets/images/logo/logo-white.png" alt="Logo">
                         <img class="logo-fold" src="~/assets/images/logo/logo-fold.png" alt="Logo">
                     </a>
                 </div>
@@ -190,7 +192,6 @@
             <!-- Side Nav END -->
             <!-- Page Container START -->
             <div class="page-container">
-
 
                 <!-- Content Wrapper START -->
                 <div class="main-content">
@@ -385,7 +386,9 @@
             <!-- Quick View END -->
         </div>
     </div>
-
+    <div class="scrollTop">
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    </div>
     <!-- Core Vendors JS -->
     <script src="~/assets/js/vendors.min.js"></script>
 
@@ -421,6 +424,22 @@
                 $('[href="' + lastTab + '"]').parent().addClass('active');
             }
         }
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            var btn = $('.scrollTop');
+            if (document.documentElement.scrollTop > 39 || document.body.scrollTop > 39) {
+                btn.css("opacity", "1"); 
+            } else {
+                btn.css("opacity", "0");
+            }
+        }
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            var body = $("html, body");
+            body.stop().animate({ scrollTop: 0 }, 500);
+        };
     </script>
 </body>
 
