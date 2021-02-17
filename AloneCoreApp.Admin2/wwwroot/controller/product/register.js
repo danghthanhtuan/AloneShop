@@ -11,6 +11,7 @@
             window.location.href = document.referrer;
         });
 
+
         // Validate Form Product
         $('#frmProduct').validate({
             ignore: ':hidden:not(:checkbox)',
