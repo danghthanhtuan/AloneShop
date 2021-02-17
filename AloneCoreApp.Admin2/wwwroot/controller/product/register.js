@@ -8,10 +8,8 @@
     function registerEvents() {
         $('#btnBack').on('click', function (e) {
             e.preventDefault();
-            window.location.href = alone.getParameterByName('source');
+            window.location.href = document.referrer;
         });
-
-
 
         // Validate Form Product
         $('#frmProduct').validate({

@@ -31,7 +31,7 @@
             e.preventDefault();
             var id = $(this)[0].id;
             var source = encodeURIComponent(window.location.pathname);
-            window.location.replace('detail?id=' + id + '&source=' + source);
+            window.location.replace('detail?source=' + source + "&id=" + id);
         });
 
         // Events Edit Product
@@ -39,7 +39,7 @@
             e.preventDefault();
             var id = $(this)[0].id;
             var source = encodeURIComponent(window.location.pathname);
-            window.location.replace('productregister?id=' + id + '&source=' + source);
+            window.location.replace('productregister?source=' + source + "&id=" + id + '&action=edit');
         });
 
         // Events Edit Product
@@ -47,7 +47,7 @@
             e.preventDefault();
             var source = encodeURIComponent(window.location.pathname);
             //
-            window.location.href = 'productregister?source=' + source;
+            window.location.href = 'productregister?source=' + source + '&action=register';
         });
 
         $('body').on('click', '.btn-delete', function (e) {
@@ -203,7 +203,7 @@
                 paginate: {
                     previous: "Đầu",
                     next: "Tiếp theo",
-                    sLast: "Cuối"
+                    last: "Cuối"
                 }
             },
             ajax: {
@@ -262,7 +262,9 @@
                 {
                     "data": null, render: function (data, type, row) {
                         return '<div class="d-flex align-items-center">' +
-                            '<img class="img-fluid rounded" src="' + row.Image + '" style="max-width: 60px" alt="">' +
+                            '<img class="img-fluid rounded" src="' +
+                            (row.Image == null || row.Image == '' ? '../images/products/thumb-16.jpg' : row.Image) +
+                            '" style="max-width: 60px" alt="">' +
                             '<a href="#" class="m-b-0 m-l-10 btn-view" id="' + row.Id + '">' + row.Name +
                             '</a></div>';
                     },
