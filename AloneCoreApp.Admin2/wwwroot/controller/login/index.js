@@ -57,6 +57,10 @@ var loginController = function () {
                     alone.notify(res.Messages, 'danger');
                     alone.stopLoading();
                 }
+            },
+            error: function () {
+                alone.notify('Có lỗi xảy ra khi đăng nhập!', 'danger');
+                alone.stopLoading();
             }
         })
     }

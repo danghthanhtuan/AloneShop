@@ -14,4 +14,8 @@
     <ProjectReference Include="..\AloneCore\AloneCoreApp.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Templates\" />
+  </ItemGroup>
+
 </Project>

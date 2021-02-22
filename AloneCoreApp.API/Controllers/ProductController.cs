@@ -61,6 +61,20 @@ namespace AloneCoreApp.API.Controllers
             return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
         }
 
+        /// <summary>
+        /// Get All Product Category
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-quantity")]
+        public async Task<IActionResult> GetQuantities(int productId)
+        {
+            var quantities = await _productService.GetQuantities(productId);
+            if (quantities != null)
+                return new OkObjectResult(new ApiOkResponse(quantities));
+            return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
+        }
+
         [HttpPost]
         [Route("paging")]
         public async Task<IActionResult> GetAllPaging(ProductPagingRequest productVm)
@@ -135,6 +149,16 @@ namespace AloneCoreApp.API.Controllers
                 _productService.Save();
                 return new OkObjectResult(new ApiOkResponse(productVm));
             }
+        }
+
+        [HttpPost]
+        [Route("update-quantity")]
+        public IActionResult SaveQuantities(int productId, List<ProductQuantityViewModel> quantities)
+        {
+            //var productId = 22;
+            _productService.AddQuantity(productId, quantities);
+            _productService.Save();
+            return new OkObjectResult(new ApiOkResponse(quantities));
         }
 
         #endregion

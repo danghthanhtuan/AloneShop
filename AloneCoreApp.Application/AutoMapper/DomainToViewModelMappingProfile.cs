@@ -13,6 +13,9 @@ namespace AloneCoreApp.Application.AutoMapper
             CreateMap<Function, FunctionViewModel>();
             CreateMap<Product, ProductViewModel>();
             CreateMap<AppUser, AppUserViewModel>();
+            CreateMap<Color, ColorViewModel>();
+            CreateMap<Size, SizeViewModel>();
+            CreateMap<ProductQuantity, ProductQuantityViewModel>();
         }
     }
 }

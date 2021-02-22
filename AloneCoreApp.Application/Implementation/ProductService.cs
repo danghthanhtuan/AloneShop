@@ -1,5 +1,6 @@
 ﻿using AloneCoreApp.Application.Interfaces;
 using AloneCoreApp.Application.ViewModels.Product;
+using AloneCoreApp.Data.EF.Repositories;
 using AloneCoreApp.Data.Entities;
 using AloneCoreApp.Data.Enums;
 using AloneCoreApp.Data.IRepositories;
@@ -12,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AloneCoreApp.Application.Implementation
@@ -24,19 +24,21 @@ namespace AloneCoreApp.Application.Implementation
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductTagRepository _productTagRepository;
-
+        private readonly IProductQuantityRepository _productQuantityRepository;
 
         public ProductService(IProductRepository productRepository,
             IMapper mapper,
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
-            IProductTagRepository productTagRepository)
+            IProductTagRepository productTagRepository,
+            IProductQuantityRepository productQuantityRepository)
         {
             _productRepository = productRepository;
             _tagRepository = tagRepository;
             _mapper = mapper;
             _productTagRepository = productTagRepository;
             _unitOfWork = unitOfWork;
+            _productQuantityRepository = productQuantityRepository;
         }
 
         public ProductViewModel Add(ProductViewModel productVm)
@@ -137,7 +139,7 @@ namespace AloneCoreApp.Application.Implementation
 
         public void Save()
         {
-           _unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
 
         public void Update(ProductViewModel productVm)
@@ -173,6 +175,38 @@ namespace AloneCoreApp.Application.Implementation
                 product.ProductTags.Add(productTag);
             }
             _productRepository.Update(product);
+        }
+
+        public Task<List<ProductQuantityViewModel>> GetQuantities(int productId)
+        {
+            return _mapper.ProjectTo<ProductQuantityViewModel>(_productQuantityRepository.FindAll(x => x.ProductId == productId)).ToListAsync();
+        }
+
+        public void AddQuantity(int productId, List<ProductQuantityViewModel> quantities)
+        {
+            _productQuantityRepository.RemoveMultiple(_productQuantityRepository.FindAll(x => x.ProductId == productId).ToList());
+
+            // Duplicate SizeId and ColorId => Sum quantity
+            var quantityGroup = quantities.GroupBy(x => new { x.SizeId, x.ColorId })
+                .Select(x => new ProductQuantityViewModel()
+                    {
+                        ProductId = productId,
+                        SizeId = x.Key.SizeId,
+                        ColorId = x.Key.ColorId,
+                        Quantity = x.Sum(y => y.Quantity)
+                    }
+                ).ToList();
+
+            foreach (var quantity in quantityGroup)
+            {
+                _productQuantityRepository.Add(new ProductQuantity()
+                {
+                    ProductId = productId,
+                    ColorId = quantity.ColorId,
+                    SizeId = quantity.SizeId,
+                    Quantity = quantity.Quantity
+                });
+            }
         }
     }
 }

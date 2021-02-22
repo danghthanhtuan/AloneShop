@@ -32,7 +32,6 @@ namespace AloneCoreApp.Admin2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
