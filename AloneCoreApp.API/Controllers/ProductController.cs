@@ -155,7 +155,6 @@ namespace AloneCoreApp.API.Controllers
         [Route("update-quantity")]
         public IActionResult SaveQuantities(int productId, List<ProductQuantityViewModel> quantities)
         {
-            //var productId = 22;
             _productService.AddQuantity(productId, quantities);
             _productService.Save();
             return new OkObjectResult(new ApiOkResponse(quantities));
