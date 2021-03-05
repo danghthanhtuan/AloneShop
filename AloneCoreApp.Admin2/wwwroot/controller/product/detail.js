@@ -13,7 +13,7 @@
         $('#btnEdit').on('click', function (e) {
             e.preventDefault();
             var source = encodeURIComponent(window.location.search);
-            window.location.replace('productregister?id=' + alone.getParameterByName('id') + '&source=' + source);
+            window.location.replace('productregister?source=' + source + '&id=' + alone.getParameterByName('id') + '&action=edit');
         });
     }
 

@@ -20,12 +20,12 @@
             newest_on_top: false,
             showProgressbar: false,
             placement: {
-                from: "top",
+                from: "bottom",
                 align: "right"
             },
             offset: 20,
             spacing: 10,
-            z_index: 9999,
+            z_index: 999999,
             delay: 5000,
             timer: 500,
             url_target: '_blank',
@@ -184,9 +184,9 @@
 
 }
 
-$(document).ajaxSend(function (e, xhr, options) {
-    if (options.type.toUpperCase() == "POST" || options.type.toUpperCase() == "PUT") {
-        var token = $('form').find("input[name='__RequestVerificationToken']").val();
-        xhr.setRequestHeader("RequestVerificationToken", token);
-    }
-});
+//$(document).ajaxSend(function (e, xhr, options) {
+//    if (options.type.toUpperCase() == "POST" || options.type.toUpperCase() == "PUT") {
+//        var token = $('form').find("input[name='__RequestVerificationToken']").val();
+//        xhr.setRequestHeader("RequestVerificationToken", token);
+//    }
+//});

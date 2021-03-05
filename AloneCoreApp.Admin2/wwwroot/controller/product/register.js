@@ -1,17 +1,18 @@
 ﻿var productRegisterController = function () {
+    var quantityManagement = new QuantityManagement();
     this.initialize = function () {
         loadData();
         loadCategories();
         registerEvents();
         //registerControls();
+        quantityManagement.initialize();
     }
+
     function registerEvents() {
         $('#btnBack').on('click', function (e) {
             e.preventDefault();
-            window.location.href = alone.getParameterByName('source');
+            window.location.href = document.referrer;
         });
-
-
 
         // Validate Form Product
         $('#frmProduct').validate({

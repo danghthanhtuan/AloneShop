@@ -22,5 +22,13 @@ namespace AloneCoreApp.Application.Interfaces
         Task<ProductViewModel> GetByIdAsync(int id);
 
         Task<PagedResult<ProductViewModel>> GetAllPaging(int? categoryId, string keyword, int page, int pageSize);
+
+        void AddQuantity(int productId, List<ProductQuantityViewModel> quantities);
+
+        Task<List<ProductQuantityViewModel>> GetQuantities(int productId);
+
+        void AddImages(int productId, string[] images);
+
+        List<ProductImageViewModel> GetImages(int productId);
     }
 }

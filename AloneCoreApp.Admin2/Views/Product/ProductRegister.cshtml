@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "ProductRegister";
 }
@@ -12,60 +13,77 @@
 }
 
 @section Scripts {
+    <script>
+        APP_CONFIG = {
+            ApiGetColorAll: decodeURIComponent('@Configuration["ApiUrl"]' + '@Configuration["ApiGetColorAll"]'),
+            ApiGetSizeAll : decodeURIComponent('@Configuration["ApiUrl"]' + '@Configuration["ApiGetSizeAll"]'),
+            ApiUpdateQuantity : decodeURIComponent('@Configuration["ApiUrl"]' + '@Configuration["ApiUpdateQuantity"]'),
+            ApiGetQuantity : decodeURIComponent('@Configuration["ApiUrl"]' + '@Configuration["ApiGetQuantity"]'),
+        }
+    </script>
     <script src="~/assets/vendors/select2/select2.min.js"></script>
     <script src="~/assets/vendors/quill/quill.min.js"></script>
     <script src="~/assets/js/pages/e-commerce-product-edit.js"></script>
     <script src="~/assets/vendors/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/controller/product/register.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
+    <script src="~/controller/product/quantity-management.js"></script>
 
     <script>
         var productRegister = new productRegisterController();
         productRegister.initialize();
     </script>
 }
-<form id="frmProduct">
-    <div class="page-header no-gutters has-tab">
-        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
-            <div class="media align-items-center m-b-15">
-                <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
-                    <img src="../assets/images/others/thumb-16.jpg" alt="">
-                </div>
-                <div class="m-l-15">
-                    <h4 class="m-b-0">Skinny Men Blazer</h4>
-                    <p class="text-muted m-b-0">Code: #5325</p>
-                </div>
+
+<div class="page-header no-gutters has-tab">
+    <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+        <div class="media align-items-center m-b-15">
+            <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+                <img src="../assets/images/others/thumb-16.jpg" alt="">
             </div>
-            <div class="m-b-15">
-                <button id="btnSave" class="btn btn-primary">
-                    <i class="anticon anticon-save"></i>
-                    <span>Save</span>
-                </button>
-                <button id="btnBack" class="btn btn-primary">
-                    <i class="anticon anticon-save"></i>
-                    <span>Back</span>
-                </button>
+            <div class="m-l-15">
+                <h4 class="m-b-0">Skinny Men Blazer</h4>
+                <p class="text-muted m-b-0">Code: #5325</p>
             </div>
         </div>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#product-edit-option">Option Info</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
-            </li>
-        </ul>
+        <div class="m-b-15">
+            <button id="btnBack" class="btn btn-primary">
+                <i class="anticon anticon-save"></i>
+                <span>Back</span>
+            </button>
+        </div>
     </div>
-    <div class="tab-content m-t-15">
-        <div class="tab-pane fade show active" id="product-edit-basic">
-            <div class="card">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#product-edit-option">Option Info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#product-edit-images">Product Image</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content m-t-15">
+    <div class="tab-pane fade show active" id="product-edit-basic">
+        <div class="card">
+
+            <form id="frmProduct">
                 <div class="card-body">
+                    <div class="form-group">
+                        <button id="btnSave" style="float:right;" class="btn btn-primary">
+                            <i class="anticon anticon-save"></i>
+                            <span>Save</span>
+                        </button>
+                    </div>
                     <div class="form-group">
                         <label class="font-weight-semibold" for="productName">Product Name <code>*</code></label>
                         <input type="text" name="inputProductName" class="form-control" id="txtProductName" placeholder="Product Name">
-                        <input id="hdfProductId" type="hidden" value="0"/>
+                        <input id="hdfProductId" type="hidden" value="0" />
                     </div>
                     <div class="form-group">
                         <label class="font-weight-semibold" for="productPrice">Price</label>
@@ -114,64 +132,71 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-        <div class="tab-pane fade" id="product-edit-option">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="font-weight-semibold" for="productSize">Size</label>
-                        <select class="select2" id="productSize" multiple="multiple">
-                            <option value="40" selected>40</option>
-                            <option value="42" selected>42</option>
-                            <option value="44">44</option>
-                            <option value="46">46</option>
-                            <option value="48">48</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="font-weight-semibold" for="productColors">Colors</label>
-                        <select class="select2" id="productColors" multiple="multiple">
-                            <option value="db" selected>Dark Blue</option>
-                            <option value="g" selected>Gray</option>
-                            <option value="gb" selected>Gray Blue</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="font-weight-semibold" for="productFit">Fit</label>
-                        <select class="select2" id="productFit">
-                            <option value="skinny" selected>Skinny</option>
-                            <option value="slim">Slim</option>
-                            <option value="regular">Regular</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="font-weight-semibold" for="productMaterial">Material</label>
-                        <select class="select2" id="productMaterial" multiple="multiple">
-                            <option value="polyester" selected>Polyester</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="font-weight-semibold" for="productShip">Ship From</label>
-                        <select class="custom-select" id="productShip">
-                            <option value="columbia" selected>Columbia</option>
-                            <option value="brazil">Brazil</option>
-                            <option value="chile">Chile</option>
-                            <option value="argentina">Argentina</option>
-                        </select>
-                    </div>
+    </div>
+
+    <!-- Product Quantity-->
+    <div class="tab-pane fade" id="product-edit-option">
+        <div class="table-responsive">
+            <form id="frmQuantity">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Color</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-quantity-content"></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                <button class="btn btn-xs btn-success" type="button" id="btn-add-quantity">Thêm</button>
+                            </td>
+                            <td colspan="1">
+                                <button class="btn btn-primary" type="button" id="btnSaveQuantity">Save</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="product-edit-description">
+        <div class="card">
+            <div class="card-body">
+                <div id="productDescription">
+                    <p>Special cloth alert. The key to more success is to have a lot of pillows. Surround yourself with angels, positive energy, beautiful people, beautiful souls, clean heart, angel. They will try to close the door on you, just open it. A major key, never panic. Don’t panic, when it gets crazy and rough, don’t panic, stay calm. They key is to have every key, the key to open every door.The other day the grass was brown, now it’s green because I ain’t give up. Never surrender. Lion! I’m up to something. Always remember in the jungle there’s a lot of they in there, after you overcome they, you will make it to paradise.</p>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="product-edit-description">
-            <div class="card">
-                <div class="card-body">
-                    <div id="productDescription">
-                        <p>Special cloth alert. The key to more success is to have a lot of pillows. Surround yourself with angels, positive energy, beautiful people, beautiful souls, clean heart, angel. They will try to close the door on you, just open it. A major key, never panic. Don’t panic, when it gets crazy and rough, don’t panic, stay calm. They key is to have every key, the key to open every door.The other day the grass was brown, now it’s green because I ain’t give up. Never surrender. Lion! I’m up to something. Always remember in the jungle there’s a lot of they in there, after you overcome they, you will make it to paradise.</p>
+    </div>
+    <div class="tab-pane fade" id="product-edit-images">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img-fluid" src="../assets/images/others/product-1.jpg" alt="">
+                    </div>
+                    <div class="col-md-3">
+                        <img class="img-fluid" src="../assets/images/others/product-2.jpg" alt="">
+                    </div>
+                    <div class="col-md-3">
+                        <img class="img-fluid" src="../assets/images/others/product-3.jpg" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</form>
+</div>
+<script type="text/x-jquery-tmpl" id="template-table-quantity">
+    <tr data-id="{{Id}}">
+        <td class="m-b-10">{{{Colors}}}</td>
+        <td class="m-b-10">{{{Sizes}}}</td>
+        <td class="m-b-10"><input class="txtQuantity form-control" name="inputQuantity" style="min-width:200px;" type="number" min="1" value="{{Quantity}}" /></td>
+        <td><button class="btn btn-xs btn-danger btn-delete-quantity" type="button"><i class="fa fa-trash"></i></button></td>
+    </tr>
+</script>
