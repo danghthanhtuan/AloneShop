@@ -131,6 +131,24 @@ namespace AloneCoreApp.API.Controllers
 
         #region API UPDATE
 
+        [HttpPost]
+        [Route("update-images")]
+        public IActionResult SaveImages(int productId, string[] images)
+        {
+            _productService.AddImages(productId, images);
+            _productService.Save();
+            return new OkObjectResult(new ApiOkResponse(images));
+        }
+
+        [HttpPost]
+        [Route("get-images")]
+        public IActionResult GetImages(int productId)
+        {
+            var images = _productService.GetImages(productId);
+            _productService.Save();
+            return new OkObjectResult(new ApiOkResponse(images));
+        }
+
         [HttpPut]
         [Route("update")]
         public IActionResult Update(ProductViewModel productVm)

@@ -26,5 +26,9 @@ namespace AloneCoreApp.Application.Interfaces
         void AddQuantity(int productId, List<ProductQuantityViewModel> quantities);
 
         Task<List<ProductQuantityViewModel>> GetQuantities(int productId);
+
+        void AddImages(int productId, string[] images);
+
+        List<ProductImageViewModel> GetImages(int productId);
     }
 }

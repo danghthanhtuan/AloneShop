@@ -25,13 +25,15 @@ namespace AloneCoreApp.Application.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductTagRepository _productTagRepository;
         private readonly IProductQuantityRepository _productQuantityRepository;
+        private readonly IProductImageRepository _productImageRepository;
 
         public ProductService(IProductRepository productRepository,
             IMapper mapper,
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
             IProductTagRepository productTagRepository,
-            IProductQuantityRepository productQuantityRepository)
+            IProductQuantityRepository productQuantityRepository,
+            IProductImageRepository productImageRepository)
         {
             _productRepository = productRepository;
             _tagRepository = tagRepository;
@@ -39,6 +41,7 @@ namespace AloneCoreApp.Application.Implementation
             _productTagRepository = productTagRepository;
             _unitOfWork = unitOfWork;
             _productQuantityRepository = productQuantityRepository;
+            _productImageRepository = productImageRepository;
         }
 
         public ProductViewModel Add(ProductViewModel productVm)
@@ -207,6 +210,25 @@ namespace AloneCoreApp.Application.Implementation
                     Quantity = quantity.Quantity
                 });
             }
+        }
+
+        public void AddImages(int productId, string[] images)
+        {
+            _productImageRepository.RemoveMultiple(_productImageRepository.FindAll(x => x.ProductId == productId).ToList());
+            foreach (var image in images)
+            {
+                _productImageRepository.Add(new ProductImage()
+                {
+                    Path = image,
+                    ProductId = productId,
+                    Caption = string.Empty
+                });
+            }
+        }
+
+        public List<ProductImageViewModel> GetImages(int productId)
+        {
+            return _mapper.ProjectTo<ProductImageViewModel>(_productImageRepository.FindAll(x => x.ProductId == productId)).ToList();
         }
     }
 }
