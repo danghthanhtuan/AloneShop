@@ -59,6 +59,16 @@ namespace AloneCoreApp.API
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("https://localhost:44395")
+                    .AllowCredentials());
+            });
+
             //Config authen
             services.AddAuthentication(o =>
             {
@@ -88,11 +98,18 @@ namespace AloneCoreApp.API
             services.AddTransient<IFunctionRepository, FunctionRepository>();
             services.AddTransient<IProductTagRepository, ProductTagRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
+            services.AddTransient<IColorRepository, ColorRepository>();
+            services.AddTransient<ISizeRepository, SizeRepository>();
+            services.AddTransient<IProductQuantityRepository, ProductQuantityRepository>();
+            services.AddTransient<IProductImageRepository, ProductImageRepository>();
+
             //Services
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IFunctionService, FunctionService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IColorService, ColorService>();
+            services.AddScoped<ISizeService, SizeService>();
 
             services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
@@ -122,11 +139,13 @@ namespace AloneCoreApp.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

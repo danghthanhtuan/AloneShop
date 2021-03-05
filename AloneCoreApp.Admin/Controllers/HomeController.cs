@@ -1,18 +1,15 @@
-﻿using AloneCoreApp.Admin.Extensions;
-using AloneCoreApp.Admin.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using AloneCoreApp.Admin.Models;
 
 namespace AloneCoreApp.Admin.Controllers
 {
-    [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -23,8 +20,7 @@ namespace AloneCoreApp.Admin.Controllers
 
         public IActionResult Index()
         {
-            var email = User.GetSpecificClaim("Email");
             return View();
-        }
+        } 
     }
 }

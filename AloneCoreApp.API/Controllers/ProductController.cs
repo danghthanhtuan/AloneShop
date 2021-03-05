@@ -61,6 +61,20 @@ namespace AloneCoreApp.API.Controllers
             return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
         }
 
+        /// <summary>
+        /// Get All Product Category
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-quantity")]
+        public async Task<IActionResult> GetQuantities(int productId)
+        {
+            var quantities = await _productService.GetQuantities(productId);
+            if (quantities != null)
+                return new OkObjectResult(new ApiOkResponse(quantities));
+            return new OkObjectResult(new ApiNotFoundResponse(CommonError.DATA_NOT_FOUND));
+        }
+
         [HttpPost]
         [Route("paging")]
         public async Task<IActionResult> GetAllPaging(ProductPagingRequest productVm)
@@ -117,6 +131,24 @@ namespace AloneCoreApp.API.Controllers
 
         #region API UPDATE
 
+        [HttpPost]
+        [Route("update-images")]
+        public IActionResult SaveImages(int productId, string[] images)
+        {
+            _productService.AddImages(productId, images);
+            _productService.Save();
+            return new OkObjectResult(new ApiOkResponse(images));
+        }
+
+        [HttpPost]
+        [Route("get-images")]
+        public IActionResult GetImages(int productId)
+        {
+            var images = _productService.GetImages(productId);
+            _productService.Save();
+            return new OkObjectResult(new ApiOkResponse(images));
+        }
+
         [HttpPut]
         [Route("update")]
         public IActionResult Update(ProductViewModel productVm)
@@ -135,6 +167,15 @@ namespace AloneCoreApp.API.Controllers
                 _productService.Save();
                 return new OkObjectResult(new ApiOkResponse(productVm));
             }
+        }
+
+        [HttpPost]
+        [Route("update-quantity")]
+        public IActionResult SaveQuantities(int productId, List<ProductQuantityViewModel> quantities)
+        {
+            _productService.AddQuantity(productId, quantities);
+            _productService.Save();
+            return new OkObjectResult(new ApiOkResponse(quantities));
         }
 
         #endregion

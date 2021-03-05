@@ -1,22 +1,21 @@
-using AloneCoreApp.Admin.Helpers;
-using AloneCoreApp.Application.AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AloneCoreApp.Admin.Services.Implementation;
+using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.Application.Implementation;
 using AloneCoreApp.Application.Interfaces;
 using AloneCoreApp.Data.EF;
 using AloneCoreApp.Data.EF.Repositories;
-using AloneCoreApp.Data.Entities;
 using AloneCoreApp.Data.IRepositories;
-using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 
 namespace AloneCoreApp.Admin
 {
@@ -32,49 +31,30 @@ namespace AloneCoreApp.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                 options => options.MigrationsAssembly("AloneCoreApp.Data.EF")));
+            services.AddHttpClient();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = $"/Account/Login";
+                    options.AccessDeniedPath = "/User/For";
+                });
 
-            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaimsPrincipalFactory>();
-            //services.AddTransient<DbInitializer>();
-            //services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
-            //services.AddTransient<IProductCategoryService, ProductCategoryService>();
-
-            services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
-            services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
-
-            //Repositories
-            services.AddTransient<IFunctionRepository, FunctionRepository>();
-            //Services
-            services.AddTransient<IFunctionService, FunctionService>();
-
-     
-            services.AddSingleton(AutoMapperConfig.RegisterMappings().CreateMapper());
-            //services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
-
-            services.AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.ConfigureApplicationCookie(options =>
+            services.AddMvc().AddJsonOptions(options =>
             {
-                options.LoginPath = $"/Login";
-                options.LogoutPath = $"/Login/Logout";
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
 
-            services.AddControllersWithViews().AddJsonOptions(options =>
-               {
-                   options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                   options.JsonSerializerOptions.PropertyNamingPolicy = null;
-               });          
+            services.AddTransient<IUserServiceAdmin, UserServiceAdmin>();
+            services.AddTransient<IFunctionServiceAdmin, FunctionServiceAdmin>();
+            services.AddTransient<IProductServiceAdmin, ProductServiceAdmin>();
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddFile("Logs/Alone-{Date}.txt");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,8 +65,6 @@ namespace AloneCoreApp.Admin
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
