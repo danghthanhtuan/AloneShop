@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AloneCoreApp.Admin2.Services.Implementation;
-using AloneCoreApp.Admin2.Services.Interfaces;
+using AloneCoreApp.Admin.Services.Implementation;
+using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.Application.Implementation;
 using AloneCoreApp.Application.Interfaces;
 using AloneCoreApp.Data.EF;
@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace AloneCoreApp.Admin2
+namespace AloneCoreApp.Admin
 {
     public class Startup
     {

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AloneCoreApp.Admin2.Services.Interfaces;
+using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.Application.ViewModels.Product;
 using AloneCoreApp.Utilities.Dtos;
 using AloneCoreApp.Utilities.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AloneCoreApp.Admin2.Controllers
+namespace AloneCoreApp.Admin.Controllers
 {
     public class ProductController : BaseController
     {

@@ -1,4 +1,4 @@
-﻿using AloneCoreApp.Admin2.Services.Interfaces;
+﻿using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.Application.ViewModels.System;
 using AloneCoreApp.Utilities.Common;
 using AloneCoreApp.Utilities.Dtos;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.Admin2.Services.Implementation
+namespace AloneCoreApp.Admin.Services.Implementation
 {
     public class FunctionServiceAdmin : IFunctionServiceAdmin
     {

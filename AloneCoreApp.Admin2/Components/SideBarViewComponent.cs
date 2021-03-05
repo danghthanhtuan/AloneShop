@@ -1,5 +1,5 @@
-﻿using AloneCoreApp.Admin2.Extensions;
-using AloneCoreApp.Admin2.Services.Interfaces;
+﻿using AloneCoreApp.Admin.Extensions;
+using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.Application.ViewModels.System;
 using AloneCoreApp.Utilities.Constants;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.Admin2.Components
+namespace AloneCoreApp.Admin.Components
 {
     public class SideBarViewComponent : ViewComponent
     {

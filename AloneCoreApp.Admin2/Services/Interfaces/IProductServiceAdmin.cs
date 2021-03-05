@@ -5,7 +5,7 @@ using AloneCoreApp.Utilities.ResultJson;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.Admin2.Services.Interfaces
+namespace AloneCoreApp.Admin.Services.Interfaces
 {
     public interface IProductServiceAdmin
     {

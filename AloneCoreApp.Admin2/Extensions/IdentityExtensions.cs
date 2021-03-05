@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.Admin2.Extensions
+namespace AloneCoreApp.Admin.Extensions
 {
     public static class IdentityExtensions
     {

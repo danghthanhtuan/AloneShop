@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AloneCoreApp.Admin2.Controllers
+namespace AloneCoreApp.Admin.Controllers
 {
     [Authorize]
     public class BaseController : Controller

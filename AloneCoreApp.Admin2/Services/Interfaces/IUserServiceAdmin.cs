@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.Admin2.Services.Interfaces
+namespace AloneCoreApp.Admin.Services.Interfaces
 {
     public interface IUserServiceAdmin
     {

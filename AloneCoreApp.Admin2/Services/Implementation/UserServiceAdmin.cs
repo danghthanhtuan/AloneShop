@@ -1,4 +1,4 @@
-﻿using AloneCoreApp.Admin2.Services.Interfaces;
+﻿using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.API.ViewModels;
 using AloneCoreApp.Utilities.Common;
 using AloneCoreApp.Utilities.Dtos;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
-namespace AloneCoreApp.Admin2.Services.Implementation
+namespace AloneCoreApp.Admin.Services.Implementation
 {
     public class UserServiceAdmin : IUserServiceAdmin
     {

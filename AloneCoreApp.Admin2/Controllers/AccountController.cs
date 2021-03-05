@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using AloneCoreApp.Admin2.Services.Interfaces;
+using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.API.ViewModels;
 using AloneCoreApp.Utilities.Dtos;
 using Microsoft.AspNetCore.Authentication;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AloneCoreApp.Admin2.Controllers
+namespace AloneCoreApp.Admin.Controllers
 {
     public class AccountController : BaseController
     {

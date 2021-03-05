@@ -1,4 +1,4 @@
-﻿using AloneCoreApp.Admin2.Services.Interfaces;
+﻿using AloneCoreApp.Admin.Services.Interfaces;
 using AloneCoreApp.Application.ViewModels.Product;
 using AloneCoreApp.Utilities.Common;
 using AloneCoreApp.Utilities.Constants;
@@ -8,10 +8,10 @@ using AloneCoreApp.Utilities.ResultJson;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-using AloneCoreApp.Admin2;
+using AloneCoreApp.Admin;
 using System.Collections.Generic;
 
-namespace AloneCoreApp.Admin2.Services.Implementation
+namespace AloneCoreApp.Admin.Services.Implementation
 {
     public class ProductServiceAdmin : IProductServiceAdmin
     {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AloneCoreApp.Admin2.Models;
+using AloneCoreApp.Admin.Models;
 
-namespace AloneCoreApp.Admin2.Controllers
+namespace AloneCoreApp.Admin.Controllers
 {
     public class HomeController : BaseController
     {

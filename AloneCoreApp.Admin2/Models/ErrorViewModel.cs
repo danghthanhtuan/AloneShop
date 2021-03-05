@@ -1,6 +1,6 @@
 using System;
 
-namespace AloneCoreApp.Admin2.Models
+namespace AloneCoreApp.Admin.Models
 {
     public class ErrorViewModel
     {
