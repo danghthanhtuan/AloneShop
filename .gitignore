@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/AloneCoreApp.Admin/Logs/Alone-20210305.txt
